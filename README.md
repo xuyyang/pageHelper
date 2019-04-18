@@ -1,5 +1,5 @@
 # pageHelper
-前后端数据分离（分页插件）--基于SSM框架+layui+pageHelper+$.getJson()技术实现
+  前后端数据分离（分页插件）--基于SSM框架+layui+pageHelper+$.getJson()技术实现
 
   注意：图片效果图请于网址预览，谢谢。
   本文网址：https://42xyyang.top/post-77.html
@@ -18,10 +18,9 @@
 
    桌面文件效果图：
 
-QQ图片20190418114550.png
+     QQ图片20190418114550.png
 
    index.html页面代码：
-
 
     <!DOCTYPE html>
     <html lang="en">
@@ -61,7 +60,7 @@ QQ图片20190418114550.png
     </body>
     <script type="text/javascript">
  
-    layui.use('laypage', function(){  //此处要是看不懂的可看教程：https://www.layui.com/doc/modules/laypage.html
+       layui.use('laypage', function(){  //此处要是看不懂的可看教程：https://www.layui.com/doc/modules/laypage.html
     	
     	  var laypage = layui.laypage;   //表示在layui中使用  不独立使用laypage
     	  
@@ -98,7 +97,6 @@ QQ图片20190418114550.png
  
      });   
  
- 
     //点击页数从后台获取数据
     function getUserListByPage(url,config){
 	$.getJSON(url,config,function(res){
@@ -122,26 +120,25 @@ QQ图片20190418114550.png
 	});
 	$('#tbody').html(content);
     }
- 
     </script>
     </html>
 2、然后大家在文件中用浏览器打开index.html显示如下则可以继续进行下一步。如果不是则很有可能是静态资源没导入成功，好好检查即可。
 
-QQ图片20190418114925.png
+      QQ图片20190418114925.png
 
 3、大家在调试的时候可能会有如下这个错误No 'Access-Control-Allow-Origin' header is present on the requested resource，不用管它，我在下文会提及的。
 
-QQ图片20190418115102.png
+      QQ图片20190418115102.png
 
 4、以上3步成功完成之后，我们要开始看后端代码了。假如大家按照上篇文章搭建了如下图一样的框架，并且能够成功显示数据分页，那么现在大家先把静态资源和index.jsp页面删除。
 
-      未删除框架图：
+   未删除框架图：
 
-QQ图片20190418115500.png
+      QQ图片20190418115500.png
 
-      已删除框架图：
+   已删除框架图：
 
-QQ图片20190418115552.png
+      QQ图片20190418115552.png
 
 5、在运行eclipse中的项目后。会出现404报错，那是肯定的，因为index.jsp已经删除了嘛。这个不用管它。
 
@@ -194,22 +191,22 @@ QQ图片20190418115552.png
     }
 7、然后重新运行该项目
 
-QQ图片20190418120448.png
+      QQ图片20190418120448.png
 
 8、在桌面新建的文件夹中用浏览器打开index.html则会出现如下数据，请看下图
 
-QQ图片20190418120632.png
+      QQ图片20190418120632.png
 
 9、假如你进行到了这一步，我只能说恭喜你成功实现了前后端分离。
 
-        还需要注意如下几点问题：
+   还需要注意如下几点问题：
 
-               1、切记按照先实现上篇文章的功能，本文皆以它为基础讲解，比如框架搭建，代码修改，数据库等。
+   1、切记按照先实现上篇文章的功能，本文皆以它为基础讲解，比如框架搭建，代码修改，数据库等。
 
-               2、index.jsp和静态资源删不删除其实都无所谓，只不过为了证明实现了前后端数据分离。
+   2、index.jsp和静态资源删不删除其实都无所谓，只不过为了证明实现了前后端数据分离。
 
-               3、在index.html中有一个 var url = "http://localhost:8080/SpringMvc-01/list"; 此接口不能写错，大家先按照我写的就行，不用修改。
+   3、在index.html中有一个 var url = "http://localhost:8080/SpringMvc-01/list"; 此接口不能写错，大家先按照我写的就行，不用修改。
 
-               4、切记切记切记阅读上文，谢谢。
+   4、切记切记切记阅读上文，谢谢。
 
-               5、本文实现跨域主要是用$.getJson()，大家不懂这个参数的可以百度哦，百度肯定比我讲的好，所以我就不多讲解了。其次可以使用$.ajax()跨域实现，主要是jsonp格式转换。
+   5、本文实现跨域主要是用$.getJson()，大家不懂这个参数的可以百度哦，百度肯定比我讲的好，所以我就不多讲解了。其次可以使用$.ajax()跨域实现，主要是jsonp格式转换。
