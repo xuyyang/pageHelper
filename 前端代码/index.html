@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>pageHelper</title>
+
+	<!-- 前端分页所需静态资源 -->
+    <script type="text/javascript" src="static/jquery/1.9.1/jquery.min.js"></script>
+    <link type="text/css" href="static/layui-v2.0.2/css/layui.css" rel="stylesheet">
+    <script type="text/javascript" src="static/layui-v2.0.2/layui.all.js"></script>
+</head>
+<!-- 表格 -->
+<body>
+	<div style="display: flex; flex-direction: column; justify-content: center; align-items: center; ">
+	      <table class="layui-table" style="width: 800px">
+		  <thead>
+		    <tr>
+		      <th>ID</th>
+			  <th>用户名</th>
+			  <th>密码</th>
+			  <th>电话</th>
+			  <th>地址</th>
+			  <th>分数</th>
+			  <th>操作</th>
+		    </tr>
+		  </thead>
+		  <!-- 数据库数据  -->
+		  <tbody id="tbody">
+	          
+		  </tbody>
+		</table>
+		
+		<!-- 分页数据 -->
+		<div id="page"></div>
+	</div>
+</body>
+<script type="text/javascript">
+
+    layui.use('laypage', function(){  //此处要是看不懂的可看教程：https://www.layui.com/doc/modules/laypage.html
+    	
+    	  var laypage = layui.laypage;   //表示在layui中使用  不独立使用laypage
+    	  
+    	  var url = "http://localhost:8080/SpringMvc-01/list";  //数据api   list为控制层中的list
+
+    	  var config = {page: 1 , pageSize: 5};    //默认的参数   config.page表示 当前页   config.pageSize表示当前页的数据条数
+    	
+    	  
+    	  $.getJSON(url,config,function(res){     //$.getJson(url,data,function(res){});
+    		  laypage.render({
+    			    elem: 'page',   //容器id  上文table下面给出了一个div  id为page的容器  此处获取这个容器
+    			    count: res.total, //总条数   这个数据需要从服务器中得到
+    			    layout: ['count', 'prev', 'page', 'next', 'limit', 'skip'],
+    			    limit: config.pageSize, //每页条数 默认   
+    			    limits: [5,10,15,20],  //定义切换的条数
+    			    theme: '#FFB800', //自定义主题颜色
+    			    
+    			    jump: function(obj, first){   //切换分页的回调	  它是一个循环 ，在第一次时不进入 就是当前页         	        
+    			        //此处为关键，obj.curr表示多少页  obj.limit 表示点击切换当前页为多少条数据时触发
+    			        //大家如果把这个注释掉  就会发现点击条数切换时  当前页的数据不会发生改变了
+    			    	var config = {page: obj.curr , pageSize: obj.limit};  
+    			       
+    			    
+    			    	//首次则不进入
+    			        if(!first){ 
+    			        	config.page = obj.curr;  //就是当前页  第一页
+    			        	
+    			        	getUserListByPage(url,config);//页数的单击方法 
+    			       }
+    			    }
+    		   });
+    		  parseUserList(res,config.page);   //给一个方法 
+    	  }); 
+
+     });   
+
+
+//点击页数从后台获取数据
+function getUserListByPage(url,config){
+	$.getJSON(url,config,function(res){
+		parseUserList(res,config.page);   //页数点击后数据回调
+	});
+}
+
+//解析数据，currPage参数为预留参数，当删除一行刷新列表时，可以记住当前页而不至于显示到首页去
+function parseUserList(res,currPage){
+	var content = "";
+	$.each(res.rows, function (i, o) { //两个参数，i表示遍历的数组的下标，o表示下标对应的值
+		content += "<tr>";
+		content += "<td>"+o.id+"</td>";
+		content += "<td>"+o.username+"</td>";
+		content += "<td>"+o.password+"</td>";
+		content += "<td>"+o.phone+"</td>";
+		content += "<td>"+o.address+"</td>";
+		content += "<td>"+o.score+"</td>";
+		content += "<td>"+"<a href='#'>删除</a>"+" "+"<a href='#'>修改</a>"+"</td>";
+		content += "</tr>";
+	});
+	$('#tbody').html(content);
+}
+
+</script>
+</html>
