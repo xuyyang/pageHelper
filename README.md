@@ -23,9 +23,9 @@ QQ图片20190418114550.png
    index.html页面代码：
 
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
 	<meta charset="UTF-8">
 	<title>pageHelper</title>
  
@@ -33,9 +33,9 @@ QQ图片20190418114550.png
     <script type="text/javascript" src="static/jquery/1.9.1/jquery.min.js"></script>
     <link type="text/css" href="static/layui-v2.0.2/css/layui.css" rel="stylesheet">
     <script type="text/javascript" src="static/layui-v2.0.2/layui.all.js"></script>
-</head>
-<!-- 表格 -->
-<body>
+    </head>
+    <!-- 表格 -->
+    <body>
 	<div style="display: flex; flex-direction: column; justify-content: center; align-items: center; ">
 	      <table class="layui-table" style="width: 800px">
 		  <thead>
@@ -58,8 +58,8 @@ QQ图片20190418114550.png
 		<!-- 分页数据 -->
 		<div id="page"></div>
 	</div>
-</body>
-<script type="text/javascript">
+    </body>
+    <script type="text/javascript">
  
     layui.use('laypage', function(){  //此处要是看不懂的可看教程：https://www.layui.com/doc/modules/laypage.html
     	
@@ -99,15 +99,15 @@ QQ图片20190418114550.png
      });   
  
  
-//点击页数从后台获取数据
-function getUserListByPage(url,config){
+    //点击页数从后台获取数据
+    function getUserListByPage(url,config){
 	$.getJSON(url,config,function(res){
 		parseUserList(res,config.page);   //页数点击后数据回调
 	});
-}
+    }
  
-//解析数据，currPage参数为预留参数，当删除一行刷新列表时，可以记住当前页而不至于显示到首页去
-function parseUserList(res,currPage){
+    //解析数据，currPage参数为预留参数，当删除一行刷新列表时，可以记住当前页而不至于显示到首页去
+    function parseUserList(res,currPage){
 	var content = "";
 	$.each(res.rows, function (i, o) { //两个参数，i表示遍历的数组的下标，o表示下标对应的值
 		content += "<tr>";
@@ -121,10 +121,10 @@ function parseUserList(res,currPage){
 		content += "</tr>";
 	});
 	$('#tbody').html(content);
-}
+    }
  
-</script>
-</html>
+    </script>
+    </html>
 2、然后大家在文件中用浏览器打开index.html显示如下则可以继续进行下一步。如果不是则很有可能是静态资源没导入成功，好好检查即可。
 
 QQ图片20190418114925.png
@@ -148,26 +148,26 @@ QQ图片20190418115552.png
 6、我们现在打开UserController这个java文件，修改代码如下。关键就是加入response.setHeader("Access-Control-Allow-Origin", "*");解决我们上文提及的错误No 'Access-Control-Allow-Origin' header is present on the requested resource。
 
 
-package com.xyyang.controller;
+    package com.xyyang.controller;
  
-import java.util.HashMap;
-import java.util.Map;
+    import java.util.HashMap;
+    import java.util.Map;
  
-import javax.servlet.http.HttpServletResponse;
+    import javax.servlet.http.HttpServletResponse;
  
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+    import org.springframework.beans.factory.annotation.Autowired;
+    import org.springframework.stereotype.Controller;
+    import org.springframework.web.bind.annotation.RequestMapping;
+    import org.springframework.web.bind.annotation.RequestMethod;
+    import org.springframework.web.bind.annotation.ResponseBody;
  
  
-import com.github.pagehelper.PageInfo;
-import com.xyyang.bean.User;
-import com.xyyang.service.UserService;
+    import com.github.pagehelper.PageInfo;
+    import com.xyyang.bean.User;
+    import com.xyyang.service.UserService;
  
-@Controller
-public class UserController{
+    @Controller
+    public class UserController{
 	
 	@Autowired
 	UserService userService;	
@@ -191,7 +191,7 @@ public class UserController{
 		
 	}
 	
-}
+    }
 7、然后重新运行该项目
 
 QQ图片20190418120448.png
