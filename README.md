@@ -144,21 +144,15 @@
 
 6、我们现在打开UserController这个java文件，修改代码如下。关键就是加入response.setHeader("Access-Control-Allow-Origin", "*");解决我们上文提及的错误No 'Access-Control-Allow-Origin' header is present on the requested resource。
 
-
     package com.xyyang.controller;
- 
     import java.util.HashMap;
     import java.util.Map;
- 
     import javax.servlet.http.HttpServletResponse;
- 
     import org.springframework.beans.factory.annotation.Autowired;
     import org.springframework.stereotype.Controller;
     import org.springframework.web.bind.annotation.RequestMapping;
     import org.springframework.web.bind.annotation.RequestMethod;
     import org.springframework.web.bind.annotation.ResponseBody;
- 
- 
     import com.github.pagehelper.PageInfo;
     import com.xyyang.bean.User;
     import com.xyyang.service.UserService;
@@ -184,10 +178,8 @@
 		//获取每页数据
 		resultMap.put("rows", pager.getList());
 		System.out.println(resultMap);
-		return resultMap;
-		
-	}
-	
+		return resultMap;	
+	}	
     }
 7、然后重新运行该项目
 
@@ -201,12 +193,13 @@
 
    还需要注意如下几点问题：
 
-   1、切记按照先实现上篇文章的功能，本文皆以它为基础讲解，比如框架搭建，代码修改，数据库等。
+   one、切记按照先实现上篇文章的功能，本文皆以它为基础讲解，比如框架搭建，代码修改，数据库等。
 
-   2、index.jsp和静态资源删不删除其实都无所谓，只不过为了证明实现了前后端数据分离。
+   two、index.jsp和静态资源删不删除其实都无所谓，只不过为了证明实现了前后端数据分离。
 
-   3、在index.html中有一个 var url = "http://localhost:8080/SpringMvc-01/list"; 此接口不能写错，大家先按照我写的就行，不用修改。
+   three、在index.html中有一个 var url = "http://localhost:8080/SpringMvc-01/list"; 此接口不能写错，大家先按照我写的就行，不用修改。
 
-   4、切记切记切记阅读上文，谢谢。
+   four、切记切记切记阅读上文，谢谢。
 
-   5、本文实现跨域主要是用$.getJson()，大家不懂这个参数的可以百度哦，百度肯定比我讲的好，所以我就不多讲解了。其次可以使用$.ajax()跨域实现，主要是jsonp格式转换。
+   five、本文实现跨域主要是用$.getJson()，大家不懂这个参数的可以百度哦，百度肯定比我讲的好，所以我就不多讲解了。其次可以使用$.ajax()跨域实现，主要是jsonp格式转换。
+   ......
