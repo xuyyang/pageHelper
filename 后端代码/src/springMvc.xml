@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd">
+     
+ <!-- springMvc   web层 -->   
+ 
+       <!-- 配置Controller扫描    在HelloController类之前写@Controller可以扫描到控制层的内容-->
+       <context:component-scan base-package="com.xyyang.controller" />
+      
+       <!-- 配置注解驱动    将映射器和适配器融合在一起。说白了就是开启注解模式-->
+       <mvc:annotation-driven />
+ 
+       <!-- 配置视图解析器  去掉前后缀方式-->
+       <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+          <!-- 前缀    /WEB-INF/index.jsp  去掉/WEB-INF/-->
+          <property name="prefix" value="/jsp/"></property>
+          <!-- 后缀   /WEB-INF/index.jsp  去掉.jsp -->
+          <property name="suffix" value=".jsp"></property>
+       </bean>
+       
+       <mvc:default-servlet-handler/>
+ 
+ <!-- service   业务层 -->   
+    
+       <!-- 配置Service扫描   在Service实现类之前写@Service可以扫描到包下的全部内容-->
+       <context:component-scan base-package="com.xyyang.service" />
+      
+ <!-- dao   持久层 -->
+ 
+       <!-- 配置 读取properties文件 db.properties -->
+       <context:property-placeholder location="classpath:jdbc.properties" /> 
+       
+       <!-- 配置 数据源 -->
+	   <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+		   <property name="driverClassName" value="${jdbc.driver}" />
+		   <property name="url" value="${jdbc.url}" />
+		   <property name="username" value="${jdbc.username}" />
+		   <property name="password" value="${jdbc.password}" />
+	   </bean>
+	   
+	   <!-- 配置SqlSessionFactory -->
+	   <bean class="org.mybatis.spring.SqlSessionFactoryBean">
+	       <property name="dataSource" ref="dataSource" /> <!-- 设置数据源 -->
+		   <property name="configLocation" value="classpath:sqlMapConfig.xml" /> <!-- 设置MyBatis核心配置文件 -->
+		  
+		    <!-- 需要bean的注入 -->
+		   
+	   </bean>
+	   
+	   <!-- 配置Mapper扫描 -->
+	   <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+	 	  <property name="basePackage" value="com.xyyang.mapper" />
+	   </bean>
+       
+</beans>
